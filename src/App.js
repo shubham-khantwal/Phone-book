@@ -1,5 +1,8 @@
 import './App.css';
 import {useState} from "react";
+import Axios from 'axios';
+
+
 function App() {
 
   const [name,setName] = useState("");
@@ -7,7 +10,9 @@ function App() {
   const [email,setEmail] = useState("");  
 
   const submitMessage = ()=>{
-    console.log("Details fetched !");
+    Axios.post('http://localhost:3001/create',{name,ph,email}).then(()=>{
+      console.log("Details Stored !");
+    })
   };
 
   return (
