@@ -4,11 +4,15 @@
 .Information input{
   margin: 15px;
 }
-.Information  button{
+button{
   width: 250px;
 }
-.Information button:hover{
+button:hover{
   cursor: pointer;
   background-color: grey;
   color: white;
+}
+
+.App span{
+  margin: 10px;
 }

@@ -8,11 +8,19 @@ function App() {
   const [name,setName] = useState("");
   const [ph,setPh] = useState("");
   const [email,setEmail] = useState("");  
+  const [employee_list,setEmployeeList] = useState([]);
+
 
   const submitMessage = ()=>{
     Axios.post('http://localhost:3001/create',{name,ph,email}).then(()=>{
       console.log("Details Stored !");
-    })
+    });
+  };
+
+  const getEmployee = ()=>{
+    Axios.get('http://localhost:3001/employees').then((response)=>{
+        setEmployeeList(response.data);
+    });
   };
 
   return (
@@ -38,6 +46,19 @@ function App() {
           /><br/>
           <button onClick={submitMessage}>Add Phone Details</button>
         </div>
+        <hr/>
+        <div>
+        <button onClick={getEmployee}>Show Phone Book</button>
+        {employee_list.map((val)=>{
+          return (
+            <div key={val.employee_id}>
+            <span>{val.employee_name}</span>
+            <span>{val.employee_ph}</span>
+            <span>{val.employee_email}</span>
+            </div>
+        );
+          })}  
+      </div>
     </div>
   );
 }
