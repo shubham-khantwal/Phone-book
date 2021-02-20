@@ -14,5 +14,22 @@ button:hover{
 }
 
 .App span{
-  margin: 10px;
+  margin: 70px;
+  color: black;
+}
+
+.update_details{
+  margin:15px;
+}
+.App input{
+  margin:15px;
+}
+
+.user_details{
+  margin:20px;
+  background-color: rgb(156, 228, 247);
+}
+
+.delete_user{
+  padding: 10px;
 }

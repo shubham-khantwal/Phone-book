@@ -9,6 +9,8 @@ function App() {
   const [ph,setPh] = useState("");
   const [email,setEmail] = useState("");  
   const [employee_list,setEmployeeList] = useState([]);
+  const [updated_name,setUpdatedName] = useState("");
+  const [updated_ph,setUpdatedPh] = useState("");
 
 
   const submitMessage = ()=>{
@@ -21,6 +23,28 @@ function App() {
     Axios.get('http://localhost:3001/employees').then((response)=>{
         setEmployeeList(response.data);
     });
+  };
+
+  const updateMessage = (employee_email) =>{
+    Axios.put('http://localhost:3001/update',{name:updated_name,ph:updated_ph,email:employee_email}).then((response)=>{
+      setEmployeeList(employee_list.map((val)=>{
+        return val.employee_email == employee_email ?
+           {
+            employee_id : val.employee_id,
+            employee_name : updated_name,
+            employee_ph : updated_ph  ,
+            employee_email : val.employee_email
+           
+          }:  val;
+       
+      }));
+    }
+
+    );
+  };
+
+  const deleteUser = ()=>{
+    
   };
 
   return (
@@ -51,10 +75,27 @@ function App() {
         <button onClick={getEmployee}>Show Phone Book</button>
         {employee_list.map((val)=>{
           return (
-            <div key={val.employee_id}>
+            <div className="user_details" key={val.employee_id}>
             <span>{val.employee_name}</span>
             <span>{val.employee_ph}</span>
             <span>{val.employee_email}</span>
+            <div className="update_details">
+              <input type="text" placeholder="name" onChange = {(event)=>{
+                      setUpdatedName(event.target.value);
+                    }
+                                                              }/>
+              <input type="text" placeholder="ph" onChange = {(event)=>{
+                      setUpdatedPh(event.target.value);
+                    }
+                                                            }/>
+              <button onClick={()=>{updateMessage(val.employee_email);
+              }
+              }>Update</button>
+
+            </div>
+            <div className="delete_user">
+              <button>Delete</button>
+            </div>
             </div>
         );
           })}  
