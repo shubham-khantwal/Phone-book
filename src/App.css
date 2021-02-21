@@ -33,3 +33,30 @@ button:hover{
 .delete_user{
   padding: 10px;
 }
+
+.paginationBtn{
+  width: 80%; 
+  height:40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBtn a {
+  padding : 10px;
+  margin : 8px;
+  border-radius : 5px;
+  border : 1px solid rgba(8, 132, 204, 0.445);
+  color :rgb(8, 130, 163);
+  cursor : pointer;
+}
+
+.paginationBtn a:hover{
+  color: white;
+  background-color:rgb(8, 130, 163);
+}
+
+.paginationActive a{
+  color: white;
+  background-color:rgb(8, 130, 163); 
+}
