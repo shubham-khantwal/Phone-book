@@ -13,6 +13,8 @@ function App() {
   const [updated_name,setUpdatedName] = useState("");
   const [updated_ph,setUpdatedPh] = useState("");
   const [pageNumber,setPageNumber] = useState(0);
+  const [searchTerm , setSearchTerm] = useState("");
+
 
   const usersPerPage = 2;
   const pageVisited = pageNumber * usersPerPage;
@@ -45,22 +47,26 @@ function App() {
       <div className="delete_user">
         <button onClick={()=>{deleteUser(val.employee_id);}}>Delete</button>
       </div>
+       
       </div>
+      
   )
       }
       );
 
+  
   const submitMessage = ()=>{
-    Axios.post('http://localhost:3001/create',{name,ph,email}).then(()=>{
-      console.log("Details Stored !");
+    Axios.post('http://localhost:3001/create',{name:name,ph:ph,email:email}).then(()=>{
+//      setEmployeeList([...employee_list,{name:name,ph:ph,email:email}]);
+console.log("Added!");
     });
   };
 
   const getEmployee = ()=>{
     Axios.get('http://localhost:3001/employees').then((response)=>{
         setEmployeeList(response.data);
-        
     });
+  
   };
 
   const updateMessage = (employee_email) =>{
@@ -116,7 +122,31 @@ function App() {
         <hr/>
         <div>
         <button onClick={getEmployee}>Show Phone Book</button>
-            {displayUsers}  
+        {displayUsers} 
+        {
+          <div className="Search">
+          <input type="search" placeholder="Search..." onChange={(event)=>{
+            setSearchTerm(event.target.value);
+          }}/>
+          {
+            employee_list.filter((val)=>{
+              if(searchTerm  == ""){
+                return val
+              }else if ( val.employee_name.toLowerCase().includes(searchTerm.toLowerCase()) || val.employee_email.toLowerCase().includes(searchTerm.toLowerCase())){
+                  return val;
+              }
+            }).map((val,key)=>{
+              return (
+                <div className="user" key={key}>
+                    <span>{val.employee_name}</span>
+                    <span>{val.employee_ph}</span>
+                    <span>{val.employee_email}</span>
+                </div>
+              );
+            })
+          }
+      </div>
+        }
             <ReactPaginate
             previousLabel = {"Prev"}
             nextLabel = {"Next"}
@@ -128,7 +158,7 @@ function App() {
             disabledClassName = {"paginationDisabled"}
             activeClassName = {"paginationActive"}
 
-            /> 
+            />
       </div>
     
     </div>
